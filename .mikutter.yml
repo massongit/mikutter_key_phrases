@@ -1,0 +1,9 @@
+---
+slug: :key_phrases
+depends:
+  mikutter: 3.8.0
+  plugin: []
+version: '1.0'
+author: Masaya Suzuki
+name: 特徴語プラグイン
+description: TLから特徴語を抽出して表示する
