@@ -28,15 +28,11 @@ class KeyPhraseService
   # 文章中から特徴語を抽出する
   # @return 特徴語一覧
   def get
-    normalize_sentences
+    set_request
     key_phrases = {}
 
     if !@request.body.empty? && (@next_time.nil? || @next_time <= Time.now)
-      unless @next_time.nil?
-        key_phrases = JSON.parse(@http.request(@request).body)
-        @sentences.clear
-      end
-
+      key_phrases = extract_key_phrases unless @next_time.nil?
       set_next_time
     end
 
@@ -45,20 +41,35 @@ class KeyPhraseService
 
   private
 
-  # リクエストのデータサイズが上限を超えないよう、sentenceの長さを調整する
-  def normalize_sentences
+  # 特徴語を抽出する
+  # @return 特徴語一覧
+  def extract_key_phrases
+    @sentences.clear
+    JSON.parse(@http.request(@request).body)
+  end
+
+  # requestをセットする
+  def set_request
     app_id = UserConfig[:key_phrases_yahoo_app_id]
 
+    if app_id.nil? || app_id.empty?
+      @request.form_data = {}
+    else
+      normalize_sentences(app_id)
+    end
+  end
+
+  # リクエストのデータサイズが上限を超えないよう、sentenceの長さを調整する
+  # @param app_id Yahoo! JAPAN Webサービス用アプリケーションID
+  def normalize_sentences(app_id)
     until @sentences.empty?
       @request.form_data = { appid: app_id,
                              output: 'json',
                              sentence: @sentences.join }
-      break if @request.body.length < 102_400
+      return if @request.body.length < 102_400
 
       @sentences.shift
     end
-
-    @request.form_data = {} if app_id.nil? || app_id.empty?
   end
 
   # 特徴語の次回取得時刻を設定する
