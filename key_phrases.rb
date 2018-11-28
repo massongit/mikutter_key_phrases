@@ -31,7 +31,7 @@ Plugin.create(:key_phrases) do
 
   on_update do |_service, messages|
     messages.each do |message|
-      key_phrase_service << message[:message] unless message[:message].nil?
+      key_phrase_service << message[:message]
     end
 
     key_phrases = key_phrase_service.get

@@ -16,8 +16,13 @@ class KeyPhraseService
   end
 
   def <<(other)
-    s = other.gsub(/^RT +/, '').gsub(/[\w:@+-_.]+/, '')
-    @sentences.append(s.gsub(URI::DEFAULT_PARSER.make_regexp, '').strip)
+    return unless other.is_a?(String)
+
+    [/^RT +/, /[\w:@+-_.]+/, URI::DEFAULT_PARSER.make_regexp].each do |p|
+      other = other.gsub(p, '')
+    end
+
+    @sentences.append(other.strip)
   end
 
   # 文章中から特徴語を抽出する
