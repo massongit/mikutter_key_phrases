@@ -31,7 +31,7 @@ class KeyPhraseService
     set_request
     key_phrases = {}
 
-    if !@request.body.empty? && (@next_time.nil? || @next_time <= Time.now)
+    if extract_request_or_set_time?
       key_phrases = extract_key_phrases unless @next_time.nil?
       set_next_time
     end
@@ -40,6 +40,12 @@ class KeyPhraseService
   end
 
   private
+
+  # 特徴語の抽出や特徴語の次回取得時刻の設定を行うかどうか
+  # @return 特徴語の抽出や特徴語の次回取得時刻の設定を行うかどうか
+  def extract_request_or_set_time?
+    !@request.body.empty? && (@next_time.nil? || @next_time <= Time.now)
+  end
 
   # 特徴語を抽出する
   # @return 特徴語一覧
