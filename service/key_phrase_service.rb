@@ -56,7 +56,6 @@ class KeyPhraseService
       break if @request.body.length < 102_400
 
       @sentences.shift
-      app_id = UserConfig[:key_phrases_yahoo_app_id]
     end
 
     @request.form_data = {} if app_id.nil? || app_id.empty?
