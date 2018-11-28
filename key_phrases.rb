@@ -43,7 +43,7 @@ Plugin.create(:key_phrases) do
         output.append(format('　%<score>6d: %<word>s', score: score, word: word))
       end
 
-      activity(:key_phrases, output.join("\n"))
+      activity(:key_phrases, output.join("\n"), icon: Skin['icon.png'])
     end
   end
 end
