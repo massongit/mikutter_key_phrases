@@ -1,5 +1,6 @@
 # 特徴語プラグイン
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
+[![Maintainability](https://api.codeclimate.com/v1/badges/897383e00970a362e71e/maintainability)](https://codeclimate.com/github/massongit/mikutter_key_phrases/maintainability)
 <a href="https://developer.yahoo.co.jp/about">
 <img src="https://s.yimg.jp/images/yjdn/yjdn_attbtn2_105_17.gif" width="105" height="17" title="Webサービス by Yahoo! JAPAN" alt="Webサービス by Yahoo! JAPAN" border="0" style="margin:15px 15px 15px 15px"></a>
 
